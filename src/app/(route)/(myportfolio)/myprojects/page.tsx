@@ -1,20 +1,18 @@
 import React from "react";
+
 import { getQueryClient, trpc } from "@/trpc/server";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 
-import HomeView from "./_modules/view/home-view";
+import MyProjectsView from "./_modules/view/myprojects-view";
 
 export default async function Page() {
   
   const queryClient = getQueryClient();
-  await Promise.all([
-    queryClient.prefetchQuery(trpc.projects.getAll.queryOptions()),
-    queryClient.prefetchQuery(trpc.technologies.getAll.queryOptions()),
-  ]);
+  await queryClient.prefetchQuery(trpc.projects.getAll.queryOptions());
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <HomeView />
+      <MyProjectsView />
     </HydrationBoundary>
   );
 }
