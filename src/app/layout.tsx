@@ -27,9 +27,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${poppins.variable} ${josefinSlab.variable} ${geistMono.variable} antialiased`}>
+      <body className={`${poppins.variable} 
+        ${josefinSlab.variable} ${geistMono.variable} antialiased`}
+        >
         <TRPCReactProvider>
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <ThemeProvider 
+            attribute="class" 
+            defaultTheme="system" 
+            enableSystem
+          >
             <Toaster />
             {children}
           </ThemeProvider>

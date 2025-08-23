@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, useFieldArray } from "react-hook-form";
 import { toast } from "sonner";
@@ -36,11 +36,11 @@ import { ProjectFormValues, projectSchema } from "@/schemas";
 import ProjectImageUpload from "./project-form/project-image_upload";
 
 type ProjectFormPropsMain = {
-  technologieOptions: formattedDataProps["technologies"];
+  technologiesOptions: formattedDataProps["technologies"];
 } & ProjectFormProps;
 
 export default function ProjectForm({
-  technologieOptions,
+  technologiesOptions,
   id,
   title,
   description,
@@ -64,9 +64,11 @@ export default function ProjectForm({
       technologies: projectTechnologies,
     },
   });
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const router = useRouter();
   const { isSubmitting } = form.formState;
+  
 
   const trpc = useTRPC();
   const queryClient = useQueryClient();
@@ -107,12 +109,41 @@ export default function ProjectForm({
     await updateProject.mutateAsync({ id, ...cleaned });
   };
 
+  // Use field array for dynamic technology selections
   const { fields, append, remove } = useFieldArray({
     control: form.control,
     name: "technologies",
   });
-
-  const addTechnology = () => append({ technologyId: "" });
+  // Get currently selected technology IDs to prevent duplicates
+  const selectedTechnologyIds = (form.watch("technologies") ?? []).map(t => t.technologyId).filter(Boolean);
+  // Get available technologies (exclude already selected ones)
+  const availableTechnologies = technologiesOptions.filter(
+    tech => !selectedTechnologyIds.includes(tech.id)
+  );
+  // Check if there are any empty technology fields
+  const hasEmptyTechnologyField = fields.some((_, index) => {
+    const technologyId = form.watch(`technologies.${index}.technologyId`);
+    return !technologyId || technologyId.trim() === "";
+  });
+  const addTechnology = () => {
+    // Only allow adding if there are no empty fields and available technologies
+    if (!hasEmptyTechnologyField && availableTechnologies.length > 0) {
+      append({ technologyId: "" });
+      
+      // Scroll to the new technology block after a short delay
+      setTimeout(() => {
+        if (containerRef.current) {
+          const newBlock = containerRef.current.lastElementChild;
+          if (newBlock) {
+            newBlock.scrollIntoView({ 
+              behavior: 'smooth', 
+              block: 'center' 
+            });
+          }
+        }
+      }, 100);
+    }
+  };
 
   useEffect(() => {
     const errors = form.formState.errors;
@@ -233,16 +264,28 @@ export default function ProjectForm({
           </div>
 
           {/* Technologies Used */}
+          {/* Technologies Used */}
           <div className="space-y-4">
             <div className="flex items-start justify-between">
-              <FormLabel className="text-base">Technologies</FormLabel>
+              <FormLabel className="text-base">
+                Technologies
+              </FormLabel>
               <Button
                 type="button"
                 variant="outline"
                 size="sm"
                 onClick={addTechnology}
                 disabled={
-                  isSubmitting || fields.length >= technologieOptions.length
+                  isSubmitting || 
+                  hasEmptyTechnologyField || 
+                  availableTechnologies.length === 0
+                }
+                title={
+                  hasEmptyTechnologyField 
+                    ? "Please select a technology in the empty field first"
+                    : availableTechnologies.length === 0
+                    ? "All technologies have been selected"
+                    : "Add Technology"
                 }
               >
                 <Plus className="size-4 mr-2" />
@@ -250,54 +293,73 @@ export default function ProjectForm({
               </Button>
             </div>
 
-            {fields.map((field, index) => (
-              <div
-                key={field.id}
-                className="flex items-end gap-3 p-4 border rounded-lg"
-              >
-                <div className="flex-1">
-                  <FormField
-                    control={form.control}
-                    name={`technologies.${index}.technologyId`}
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Technology</FormLabel>
-                        <Select
-                          disabled={isSubmitting}
-                          onValueChange={field.onChange}
-                          value={field.value}
-                        >
-                          <FormControl>
-                            <SelectTrigger>
-                              <SelectValue placeholder="Select technology"/>
-                            </SelectTrigger>
-                          </FormControl>
-                          <SelectContent>
-                            {technologieOptions.map((item) => (
-                              <SelectItem key={item.id} value={item.id}>
-                                {item.title}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
+            <div ref={containerRef} className="space-y-4">
+              {fields.map((field, index) => {
+                // Get available options for this specific field
+                const currentValue = form.watch(`technologies.${index}.technologyId`);
+                const otherSelectedIds = selectedTechnologyIds.filter((id, i) => 
+                  i !== index && id !== currentValue
+                );
+                const availableForThisField = technologiesOptions.filter(
+                  tech => !otherSelectedIds.includes(tech.id)
+                );
 
-                <Button
-                  type="button"
-                  variant="outline"
-                  size="sm"
-                  onClick={() => remove(index)}
-                  disabled={isSubmitting}
-                >
-                  <Trash2 className="size-4 mr-2" />
-                  Remove
-                </Button>
-              </div>
-            ))}
+                return (
+                  <div
+                    key={field.id}
+                    className="flex items-end gap-3 p-4 border rounded-lg"
+                  >
+                    <div className="flex-1">
+                      <FormField
+                        control={form.control}
+                        name={`technologies.${index}.technologyId`}
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Technology</FormLabel>
+                            <Select
+                              disabled={isSubmitting}
+                              onValueChange={field.onChange}
+                              value={field.value}
+                            >
+                              <FormControl>
+                                <SelectTrigger>
+                                  <SelectValue placeholder="Select technology" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                {availableForThisField.map((item) => (
+                                  <SelectItem key={item.id} value={item.id}>
+                                    {item.title}
+                                  </SelectItem>
+                                ))}
+                              </SelectContent>
+                            </Select>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      onClick={() => remove(index)} 
+                      disabled={isSubmitting}
+                    >
+                      <Trash2 className="size-4 mr-2" />
+                      Remove
+                    </Button>
+                  </div>
+                );
+              })}
+            </div>
+
+            {fields.length === 0 && (
+              <p className="text-sm text-muted-foreground">
+                No technologies selected. Click "Add Technology" to add one.
+              </p>
+            )}
           </div>
 
           {/* Project Status Checkboxes */}

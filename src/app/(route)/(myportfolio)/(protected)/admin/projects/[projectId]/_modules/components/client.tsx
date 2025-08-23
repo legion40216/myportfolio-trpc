@@ -33,7 +33,7 @@ export default function Client({ formattedData, initialData }: ClientProps) {
     <div>
       <ProjectForm
         {...initialData}
-        technologieOptions={formattedData.technologies}
+        technologiesOptions={formattedData.technologies}
       />
     </div>
   );
