@@ -267,21 +267,19 @@ export default function ProjectForm({
           {/* Technologies Used */}
           <div className="space-y-4">
             <div className="flex items-start justify-between">
-              <FormLabel className="text-base">
-                Technologies
-              </FormLabel>
+              <FormLabel className="text-base">Technologies</FormLabel>
               <Button
                 type="button"
                 variant="outline"
                 size="sm"
                 onClick={addTechnology}
                 disabled={
-                  isSubmitting || 
-                  hasEmptyTechnologyField || 
+                  isSubmitting ||
+                  hasEmptyTechnologyField ||
                   availableTechnologies.length === 0
                 }
                 title={
-                  hasEmptyTechnologyField 
+                  hasEmptyTechnologyField
                     ? "Please select a technology in the empty field first"
                     : availableTechnologies.length === 0
                     ? "All technologies have been selected"
@@ -296,12 +294,14 @@ export default function ProjectForm({
             <div ref={containerRef} className="space-y-4">
               {fields.map((field, index) => {
                 // Get available options for this specific field
-                const currentValue = form.watch(`technologies.${index}.technologyId`);
-                const otherSelectedIds = selectedTechnologyIds.filter((id, i) => 
-                  i !== index && id !== currentValue
+                const currentValue = form.watch(
+                  `technologies.${index}.technologyId`
+                );
+                const otherSelectedIds = selectedTechnologyIds.filter(
+                  (id, i) => i !== index && id !== currentValue
                 );
                 const availableForThisField = technologiesOptions.filter(
-                  tech => !otherSelectedIds.includes(tech.id)
+                  (tech) => !otherSelectedIds.includes(tech.id)
                 );
 
                 return (
@@ -344,7 +344,7 @@ export default function ProjectForm({
                       type="button"
                       variant="outline"
                       size="sm"
-                      onClick={() => remove(index)} 
+                      onClick={() => remove(index)}
                       disabled={isSubmitting}
                     >
                       <Trash2 className="size-4 mr-2" />
@@ -357,7 +357,8 @@ export default function ProjectForm({
 
             {fields.length === 0 && (
               <p className="text-sm text-muted-foreground">
-                No technologies selected. Click "Add Technology" to add one.
+                No technologies selected. Click &quot;Add Technology&quot; to
+                add one.
               </p>
             )}
           </div>
@@ -385,7 +386,8 @@ export default function ProjectForm({
               control={form.control}
               name="isArchived"
               render={({ field }) => (
-                <FormItem className="flex flex-row items-start 
+                <FormItem
+                  className="flex flex-row items-start 
                 space-x-3 space-y-0"
                 >
                   <FormControl>
