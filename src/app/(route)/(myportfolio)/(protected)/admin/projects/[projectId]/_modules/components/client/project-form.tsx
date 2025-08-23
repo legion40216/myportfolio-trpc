@@ -39,7 +39,7 @@ type ProjectFormPropsMain = {
   technologieOptions: formattedDataProps["technologies"];
 } & ProjectFormProps;
 
-export default function ({
+export default function ProjectForm({
   technologieOptions,
   id,
   title,
