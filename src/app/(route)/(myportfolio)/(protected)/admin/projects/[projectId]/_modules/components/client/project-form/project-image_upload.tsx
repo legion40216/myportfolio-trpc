@@ -7,7 +7,7 @@ import { supabase } from "@/lib/supabaseClient";
 
 import { Button } from "@/components/ui/button";
 
-interface PortfolioImageUploadProps {
+interface ProjectImageUploadProps {
   disabled?: boolean;
   onChange: (url: string) => void;
   onRemove: (url: string) => void;
@@ -15,13 +15,13 @@ interface PortfolioImageUploadProps {
   limitValue?: number;
 }
 
-export default function PortfolioImageUpload({
+export default function ProjectImageUpload({
   disabled = false,
   onChange,
   onRemove,
   value = [],
   limitValue = 1,
-}: PortfolioImageUploadProps) {
+}: ProjectImageUploadProps) {
   const [previews, setPreviews] = useState<string[]>(value);
   const [isLoading, setIsLoading] = useState(false);
 

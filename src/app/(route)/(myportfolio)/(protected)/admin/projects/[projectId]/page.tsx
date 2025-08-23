@@ -6,16 +6,16 @@ import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import { checkAccess } from "@/utils/checkAccess";
 
 import EmptyState from "@/components/global-ui/empty-state";
-import PortfolioView from "./_modules/view/portfolio-view";
+import ProjectView from "./_modules/view/project-view";
 
 interface PageProps {
   params: Promise<{
-    portfolioId: string;
+    projectId: string;
   }>;
 }
 
 export default async function Page({ params }: PageProps) {
-  const { portfolioId } = await params;
+  const { projectId } = await params;
 
   const access = await checkAccess();
 
@@ -28,13 +28,13 @@ export default async function Page({ params }: PageProps) {
   const queryClient = getQueryClient();
   await Promise.all([
     queryClient.prefetchQuery(trpc.technologies.getAll.queryOptions()),
-    queryClient.prefetchQuery(trpc.portfolios.getById.queryOptions({ portfolioId }))
+    queryClient.prefetchQuery(trpc.projects.getById.queryOptions({ projectId }))
   ]);
 
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <PortfolioView portfolioId={portfolioId} />
+      <ProjectView projectId={projectId} />
     </HydrationBoundary>
   );
 }

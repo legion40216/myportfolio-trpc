@@ -20,6 +20,6 @@ export const footerLinks = [
 export const baseRoutes = [];
 export const adminRoutes = [
   { label: "Dashboard", href: "/admin/dashboard",},
-  { label: "Portfolios", href: "/admin/portfolios",},
+  { label: "Projects", href: "/admin/projects",},
   { label: "Technologies", href: "/admin/technologies",},
 ];

@@ -1,8 +1,8 @@
 "use client";
 import React from "react";
-import PortfolioForm from "./client/portfolio-form";
+import ProjectForm from "./client/project-form";
 
-export type PortfolioFormProps = {
+export type ProjectFormProps = {
   technologies: {
     id: string;
     title: string;
@@ -10,13 +10,13 @@ export type PortfolioFormProps = {
 };
 
 type ClientProps = {
-  initialData: PortfolioFormProps;
+  initialData: ProjectFormProps;
 };
 
 export default function Client({ initialData }: ClientProps) {
   return (
     <div>
-      <PortfolioForm 
+      <ProjectForm
         technologies={initialData.technologies}
       />
     </div>

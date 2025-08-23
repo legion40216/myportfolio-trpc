@@ -2,7 +2,7 @@
 import React from 'react'
 
 import { usePathname } from "next/navigation";
-import NavLinks from '../components/nav-links';
+
 import { adminRoutes } from '@/data/links';
 
 export function useNavRoutes() {
@@ -20,6 +20,7 @@ export function useNavRoutes() {
 
 import { Badge } from "@/components/ui/badge";
 import { useCurrentUser } from '@/hooks/client-auth-utils';
+import NavLinks from '@/components/global-ui/nav-links';
 
 export default function NavGroup() {
   const { user, isPending } = useCurrentUser();

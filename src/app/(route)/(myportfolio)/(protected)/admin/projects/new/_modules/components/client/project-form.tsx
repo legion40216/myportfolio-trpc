@@ -1,14 +1,17 @@
 "use client";
 import React, { useEffect } from "react";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, useFieldArray } from "react-hook-form";
 import { toast } from "sonner";
-import { PortfolioFormValues, portfolioSchema } from "@/schemas";
-import { formattedDataProps, initialDataProps } from "../client";
+import { ProjectFormProps } from "../client";
+import { ProjectFormValues, projectSchema } from "@/schemas";
+
 import { useTRPC } from "@/trpc/client";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+
 import { useRouter } from "next/navigation";
 import { Plus, Trash2 } from "lucide-react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import {
   Form,
@@ -31,61 +34,48 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import PortfolioImageUpload from "./portfolio-form/portfolio-image_upload";
+import ProjectImageUpload from "./project-form/project-image_upload";
 
-type PortfolioFormProps = {
-  technologieOptions: formattedDataProps["technologies"];
-} & initialDataProps;
-
-export default function PortfolioForm({
-  technologieOptions,
-  id,
-  title,
-  description,
-  webLink,
-  githubLink,
-  imgSrc,
-  isFeatured,
-  isArchived,
-  technologies: portfolioTechnologies = [{ technologyId: "" }],
-}: PortfolioFormProps) {
-  const form = useForm<PortfolioFormValues>({
-    resolver: zodResolver(portfolioSchema),
+export default function ProjectForm({ technologies }: ProjectFormProps) {
+  const form = useForm<ProjectFormValues>({
+    resolver: zodResolver(projectSchema),
     defaultValues: {
-      title,
-      description,
-      imgSrc,
-      webLink,
-      githubLink,
-      isFeatured,
-      isArchived,
-      technologies: portfolioTechnologies,
+      title: "",
+      description: "",
+      webLink: "",
+      githubLink: "",
+      imgSrc: "",
+      isFeatured: false,
+      isArchived: false,
+      technologies: [],
     },
   });
 
   const router = useRouter();
   const { isSubmitting } = form.formState;
 
+  const toastLoading = "Creating project... Please wait.";
+  const toastMessage = "Project created successfully!";
+  const action = "Create";
+
   const trpc = useTRPC();
   const queryClient = useQueryClient();
 
-  const toastLoading = "Updating portfolio... Please wait.";
-  const toastMessage = "Portfolio updated successfully!";
-  const action = "Update";
-
-  const updatePortfolio = useMutation(
-    trpc.portfolios.update.mutationOptions({
+  const createProject = useMutation(
+    trpc.projects.create.mutationOptions({
       onMutate: () => {
         toast.loading(toastLoading);
       },
       onSuccess: () => {
-        queryClient.invalidateQueries(trpc.portfolios.getAll.queryOptions());
+        queryClient.invalidateQueries(
+          trpc.projects.getAll.queryOptions()
+        );
         toast.success(toastMessage);
-        router.push("/admin/portfolios");
+        router.push("/admin/projects");
       },
       onError: (error) => {
         toast.error(error.message || "Something went wrong.");
-        console.error("Error updating portfolio:", error);
+        console.error("Error creating project:", error);
       },
       onSettled: () => {
         toast.dismiss();
@@ -93,7 +83,7 @@ export default function PortfolioForm({
     })
   );
 
-  const onSubmit = async (data: PortfolioFormValues) => {
+  const onSubmit = async (data: ProjectFormValues) => {
     // filter out any rows where technologyId is still empty
     const cleaned = {
       ...data,
@@ -102,27 +92,40 @@ export default function PortfolioForm({
       ),
     };
 
-    await updatePortfolio.mutateAsync({ id, ...cleaned });
+    await createProject.mutateAsync({ ...cleaned });
   };
 
+  // Use field array for dynamic technology selections
   const { fields, append, remove } = useFieldArray({
     control: form.control,
     name: "technologies",
   });
 
-  const addTechnology = () => append({ technologyId: "" });
+  const addTechnology = () => {
+    append({ technologyId: "" });
+  };
 
   useEffect(() => {
     const errors = form.formState.errors;
-    if (Object.keys(errors).length > 0 && form.formState.isSubmitted) {
-      toast.error("Please check the form for errors.");
+    const errorCount = Object.keys(errors).length;
+
+    if (errorCount > 0 && form.formState.isSubmitted) {
+      if (errorCount === 1) {
+        const firstError = Object.values(errors)[0];
+        toast.error(firstError?.message || "Please check the form for errors.");
+      } else {
+        toast.error("Please check the form for errors.");
+      }
     }
   }, [form.formState.errors, form.formState.isSubmitted]);
 
   return (
     <div>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+        <form 
+          onSubmit={form.handleSubmit(onSubmit)} 
+          className="space-y-5"
+        >
           {/* Image upload */}
           <div className="w-full max-w-[200px]">
             <FormField
@@ -131,7 +134,7 @@ export default function PortfolioForm({
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <PortfolioImageUpload
+                    <ProjectImageUpload
                       value={field.value ? [field.value] : []}
                       disabled={isSubmitting}
                       onChange={(url) => {
@@ -148,6 +151,7 @@ export default function PortfolioForm({
             />
           </div>
 
+          {/* Basic Portfolio Info */}
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 space-y-2">
             <div className="w-full max-w-[400px]">
               <FormField
@@ -233,14 +237,16 @@ export default function PortfolioForm({
           {/* Technologies Used */}
           <div className="space-y-4">
             <div className="flex items-start justify-between">
-              <FormLabel className="text-base">Technologies</FormLabel>
+              <FormLabel className="text-base">
+                Technologies
+              </FormLabel>
               <Button
                 type="button"
                 variant="outline"
                 size="sm"
                 onClick={addTechnology}
                 disabled={
-                  isSubmitting || fields.length >= technologieOptions.length
+                  isSubmitting || fields.length >= technologies.length
                 }
               >
                 <Plus className="size-4 mr-2" />
@@ -271,7 +277,7 @@ export default function PortfolioForm({
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent>
-                            {technologieOptions.map((item) => (
+                            {technologies.map((item) => (
                               <SelectItem key={item.id} value={item.id}>
                                 {item.title}
                               </SelectItem>
@@ -288,7 +294,7 @@ export default function PortfolioForm({
                   type="button"
                   variant="outline"
                   size="sm"
-                  onClick={() => remove(index)}
+                  onClick={() => remove(index)} 
                   disabled={isSubmitting}
                 >
                   <Trash2 className="size-4 mr-2" />
@@ -335,7 +341,10 @@ export default function PortfolioForm({
             />
           </div>
 
-          <Button type="submit" disabled={isSubmitting}>
+          <Button 
+            type="submit" 
+            disabled={isSubmitting}
+          >
             {action}
           </Button>
         </form>

@@ -6,7 +6,7 @@ import { dehydrate, HydrationBoundary } from '@tanstack/react-query'
 import { checkAccess } from '@/utils/checkAccess';
 
 import EmptyState from '@/components/global-ui/empty-state';
-import PortfolioView from './_modules/view/portfolio-view';
+import ProjectView from './_modules/view/project-view';
 
 export default async function Page() {
     const access = await checkAccess();
@@ -22,7 +22,7 @@ export default async function Page() {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <PortfolioView />
+      <ProjectView />
     </HydrationBoundary>
   )
 }

@@ -2,19 +2,20 @@ import React from "react";
 
 import HeadingState from "@/components/global-ui/heading-state";
 import { Separator } from "@/components/ui/separator";
-import { PortfolioSection } from "../section/portfolio-section";
+import { ProjectSection } from "../section/project-section";
 
-export default function PortfolioView() {
+
+export default function ProjectView() {
   return (
     <div className="space-y-5">
       <HeadingState
-        title="Portfolio form"
-        subtitle="Create portfolio for your application"
+        title="Project form"
+        subtitle="Create project for your application"
       />
 
       <Separator />
 
-      <PortfolioSection />
+      <ProjectSection />
     </div>
   );
 }

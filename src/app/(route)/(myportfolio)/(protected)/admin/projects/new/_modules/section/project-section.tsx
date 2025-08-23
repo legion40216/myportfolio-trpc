@@ -8,24 +8,24 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import EmptyState from "@/components/global-ui/empty-state";
 import Client from "../components/client";
 
-export const PortfolioSection = () => {
+export const ProjectSection = () => {
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <ErrorBoundary
         fallback={
           <EmptyState
-            title="Error loading portfolio"
+            title="Error loading project"
             subtitle="Please try again later."
           />
         }
       >
-        <PortfolioSectionContent />
+        <ProjectSectionContent />
       </ErrorBoundary>
     </Suspense>
   );
 };
 
-const PortfolioSectionContent = () => {
+const ProjectSectionContent = () => {
   const trpc = useTRPC();
   const { data } = useSuspenseQuery(trpc.technologies.getAll.queryOptions());
   const technologies = data.technologies

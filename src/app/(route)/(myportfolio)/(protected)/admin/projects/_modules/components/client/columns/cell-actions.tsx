@@ -29,23 +29,24 @@ export default function CellActions({ itemId }: Props) {
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  const toastLoading = "Deleting portfolio... Please wait.";
-  const toastMessage = "Portfolio deleted successfully!";
+  const toastLoading = "Deleting project... Please wait.";
+  const toastMessage = "Project deleted successfully!";
 
   const trpc = useTRPC();
   const queryClient = useQueryClient();
-  const deletePortfolio = useMutation(
-  trpc.portfolios.delete.mutationOptions({
+
+  const deleteProject = useMutation(
+    trpc.projects.delete.mutationOptions({
       onMutate: () => {
         toast.loading(toastLoading);
       },
       onSuccess: () => {
-        queryClient.invalidateQueries(trpc.portfolios.getAll.queryOptions())
+        queryClient.invalidateQueries(trpc.projects.getAll.queryOptions());
         toast.success(toastMessage);
       },
       onError: (error) => {
         toast.error(error.message || "Something went wrong.");
-        console.error("Error deleting portfolio:", error);
+        console.error("Error deleting project:", error);
       },
       onSettled: () => {
         toast.dismiss();
@@ -55,25 +56,25 @@ export default function CellActions({ itemId }: Props) {
     })
   );
 
-  const handleDeletePortfolio = () => {
-    deletePortfolio.mutate({ itemId });
+  const handleDeleteProject = () => {
+    deleteProject.mutate({ itemId });
   };
 
   return (
     <>
       <ConfirmModal
-        onConfirm={handleDeletePortfolio}
+        onConfirm={handleDeleteProject}
         open={confirmOpen}
         setOpen={setConfirmOpen}
-        isDisabled={deletePortfolio.isPending}
+        isDisabled={deleteProject.isPending}
       />
 
       <DropdownMenu open={dropdownOpen} onOpenChange={setDropdownOpen}>
         <DropdownMenuTrigger asChild>
           <Button 
-          variant="ghost" 
-          size="icon" 
-          disabled={deletePortfolio.isPending}
+            variant="ghost" 
+            size="icon" 
+            disabled={deleteProject.isPending}
           >
             <span className="sr-only">Open menu</span>
             <MoreHorizontal className="size-4" />
@@ -87,7 +88,7 @@ export default function CellActions({ itemId }: Props) {
               e.preventDefault();
               setConfirmOpen(true);
             }}
-            disabled={deletePortfolio.isPending}
+            disabled={deleteProject.isPending}
           >
             <div className="flex items-center gap-2 h-full text-destructive">
               <Trash2 className="size-4 text-destructive" />

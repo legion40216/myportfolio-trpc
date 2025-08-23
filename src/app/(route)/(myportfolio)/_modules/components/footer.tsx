@@ -2,7 +2,7 @@ import React from "react";
 
 import { footerLinks } from "@/data/links";
 
-import NavLinks from "./navbar/components/nav-links";
+import NavLinks from "@/components/global-ui/nav-links";
 
 export default function Footer() {
   // Separate internal and external links

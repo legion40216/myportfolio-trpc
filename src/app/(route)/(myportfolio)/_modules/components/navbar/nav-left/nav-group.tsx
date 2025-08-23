@@ -3,7 +3,7 @@ import React from "react";
 import { Menu } from "lucide-react";
 import { navLinks } from "@/data/links";
 import { usePathname } from "next/navigation";
-import NavLinks from "../components/nav-links";
+import NavLinks from "@/components/global-ui/nav-links";
 
 import {
   DropdownMenu,
