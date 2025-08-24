@@ -11,6 +11,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export function useNavRoutes() {
   const pathName = usePathname();
@@ -29,15 +31,23 @@ export default function NavGroup() {
       {/* Desktop Nav */}
       <div className="hidden sm:flex gap-3 items-center">
         {routes.map((route, index) => (
-          <NavLinks
+          <Button
             key={index}
-            routeActive={route.active}
-            routeHref={route.href}
-            routeLabel={route.label.charAt(0).toUpperCase() + route.label.slice(1)}
-            className="hover:text-primary hover:underline"
-            activeClassName="text-primary underline"
-            inactiveClassName="text-muted-foreground"
-          />
+            variant={"ghost"}
+            asChild
+            className={route.active ? "!text-primary" : "!text-muted-foreground"}
+          >
+            <Link href={route.href}>{route.label.charAt(0).toUpperCase() + route.label.slice(1)}</Link>
+          </Button>
+          // <NavLinks
+          //   key={index}
+          //   routeActive={route.active}
+          //   routeHref={route.href}
+          //   routeLabel={route.label.charAt(0).toUpperCase() + route.label.slice(1)}
+          //   className="hover:text-primary hover:underline"
+          //   activeClassName="text-primary underline"
+          //   inactiveClassName="text-muted-foreground"
+          // />
         ))}
       </div>
 

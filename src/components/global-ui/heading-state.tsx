@@ -11,8 +11,8 @@ export default function HeadingState({
 }: HeadingsProps) {
   return (
     <div>
-        <h2 className="text-3xl font-bold tracking-tigh"> {title} </h2>
-        <p className="text-sm text-muted-foreground"> {subtitle} </p>
+        <h2 className="text-3xl font-bold tracking-tigh">{title}</h2>
+        <p className="text-sm text-muted-foreground">{subtitle}</p>
     </div>
   )
 }

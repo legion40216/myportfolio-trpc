@@ -17,6 +17,7 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import LogoutGlobal from "@/components/global-ui/logoutGlobal";
 
 export default function UserMenu() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -64,15 +65,19 @@ export default function UserMenu() {
           </DropdownMenuTrigger>
 
           <DropdownMenuContent className="z-[9999]" align="end">
-            <DropdownMenuLabel>Account</DropdownMenuLabel>
+            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DropdownMenuItem>
+              <div className="text-muted-foreground">
+                <LogoutGlobal />
+              </div>
+            </DropdownMenuItem>
             <DropdownMenuSeparator />
+            <DropdownMenuLabel>Account</DropdownMenuLabel>
             {modifiedRoutes.map((route, index) => (
-              <DropdownMenuItem key={index} className="p-0">
+              <DropdownMenuItem key={index}>
                 <Link
                   href={route.href}
-                  className={`block w-full px-3 py-2 
-                    rounded-md text-sm 
-                    transition-colors hover:bg-muted
+                  className={`
                     ${
                       activeLink === route.href
                         ? "text-primary font-medium"
