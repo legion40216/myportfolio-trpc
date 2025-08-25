@@ -139,14 +139,6 @@ export default function LoginForm() {
           </form>
         </Form>
       </CardContent>
-      <CardFooter className="flex justify-center">
-        <p className="text-sm text-gray-600">
-          Don&apos;t have an account yet?{" "}
-          <Link href="register" className="text-primary hover:underline">
-            Sign up
-          </Link>
-        </p>
-      </CardFooter>
     </Card>
   );
 }

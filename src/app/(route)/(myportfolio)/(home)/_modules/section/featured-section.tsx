@@ -43,11 +43,10 @@ const FeaturedSectionContent = () => {
     imgSrc: item.imgSrc,
     title: item.title,
     description: item.description,
-    link: item.id,
-    github: item.id,
+    link: item.webLink,
+    github: item.githubLink,
     technologies: item.technologies.map((item) => (item.technology.title)),
   }));
-
 
   return (
     <div className="space-y-2">
@@ -59,7 +58,7 @@ const FeaturedSectionContent = () => {
             description={card.description}
             link={card.link}
             github={card.github}
-            tech={card.technologies}
+            technologies={card.technologies}
             />
         ))}
     </div>

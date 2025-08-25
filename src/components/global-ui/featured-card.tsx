@@ -13,7 +13,7 @@ type FeaturedCardProps = {
   description: string
   link: string
   github: string
-  tech: string[]
+  technologies: string[]
 }
 
 export default function FeaturedCard({
@@ -22,7 +22,7 @@ export default function FeaturedCard({
   description,
   link,
   github,
-  tech,
+  technologies,
 }: FeaturedCardProps) {
   return (
     <div className="group p-3 rounded-md bg-portfolio-primary
@@ -61,7 +61,7 @@ export default function FeaturedCard({
           </div>
 
           <div className="flex flex-wrap gap-1">
-            {tech?.map((item, index) => (
+            {technologies?.map((item, index) => (
               <Badge
                 className="bg-portfolio-secondary 
                 text-portfolio-secondary-foreground"

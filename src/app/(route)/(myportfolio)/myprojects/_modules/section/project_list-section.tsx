@@ -43,11 +43,10 @@ const ProjectListSectionContent = () => {
     description: item.description,
     isFeatured: item.isFeatured,
     imgSrc: item.imgSrc,
-    link: item.id,
-    github: item.id,
+    link: item.webLink,
+    github: item.githubLink,
     technologies: item.technologies.map((tech) => (tech.technology.title)),
   }));
-
 
   return (
     <div className='grid grid-cols-2 sm:grid-cols-3 gap-5 items-start'>
