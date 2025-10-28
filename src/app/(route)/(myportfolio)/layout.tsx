@@ -6,15 +6,15 @@ import { Separator } from "@/components/ui/separator";
 export default function PublicLayout({ children }: { children: ReactNode }) {
   return (
     <div className="grid grid-rows-[min-content_1fr_min-content] 
-    min-h-full space-y-4 max-w-[600px] w-full mx-auto px-4"
+    min-h-screen space-y-4 max-w-[600px] w-full mx-auto"
     >
-      <header className="">
+      <header className="px-3">
         <nav>
           <Navbar />
         </nav>
       </header>
 
-      <main className="px-3">
+      <main className="px-3 w-[600px] ">
         {children}
       </main>
 

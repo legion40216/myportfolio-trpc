@@ -1,6 +1,8 @@
 import { ThemeProvider } from "@/components/theme-provider";
+
 import { Poppins, Geist_Mono, Josefin_Slab } from "next/font/google";
 import "./globals.css";
+
 import { Toaster } from "sonner";
 import { TRPCReactProvider } from "@/trpc/client";
 

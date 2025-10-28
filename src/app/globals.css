@@ -90,7 +90,6 @@
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
 
-  /* Add dark mode versions of your portfolio colors if needed */
   /* Light mode */
   --portfolio-primary: oklch(97.1% 0.002 264.5);  
   --portfolio-primary-foreground: oklch(25% 0 270); 

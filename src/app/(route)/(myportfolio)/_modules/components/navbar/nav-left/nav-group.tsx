@@ -1,9 +1,12 @@
 "use client"
 import React from "react";
+
 import { Menu } from "lucide-react";
+
 import { navLinks } from "@/data/links";
 import { usePathname } from "next/navigation";
 import NavLinks from "@/components/global-ui/nav-links";
+import Link from "next/link";
 
 import {
   DropdownMenu,
@@ -11,9 +14,10 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
 
+import { Button } from "@/components/ui/button";
+
+// get the active routes
 export function useNavRoutes() {
   const pathName = usePathname();
 
