@@ -14,7 +14,7 @@ export default function PublicLayout({ children }: { children: ReactNode }) {
         </nav>
       </header>
 
-      <main className="px-3 w-[600px] ">
+      <main className="px-3">
         {children}
       </main>
 

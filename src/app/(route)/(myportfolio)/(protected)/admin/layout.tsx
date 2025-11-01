@@ -5,7 +5,9 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
   return (
     <div className="space-y-4">
       <NavbarAdmin/>
-      {children}
+      <div className="w-[600px]">
+        {children}
+      </div>
     </div>
   );
 }
