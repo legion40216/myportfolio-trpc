@@ -17,7 +17,7 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import LogoutGlobal from "@/components/global-ui/logoutGlobal";
+import LogoutGlobal from "@/components/global-ui/logout-global";
 
 export default function UserMenu() {
   const [isOpen, setIsOpen] = useState<boolean>(false);

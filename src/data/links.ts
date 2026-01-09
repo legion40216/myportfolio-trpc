@@ -5,16 +5,26 @@ export const navLinks = [
 ];
 
 export const footerLinks = [
-  { label: "Home", href: "/", },
-  { label: "About", href: "/about", },
-  { label: "My projects", href: "/myprojects", },
-
-  { label: "Twitter", href: "/", social: true, },
   {
-    label: "Linkedin",
-    href: "https://www.linkedin.com/in/suleman-lohar-1129a9136/", social: true,
+    title: "Navigation",
+    links: [
+      { label: "Home", href: "/" },
+      { label: "About", href: "/about" },
+      { label: "My projects", href: "/myprojects" },
+    ]
   },
-  { label: "Github", href: "https://github.com/legion40216",  social: true,},
+  {
+    title: "Connect",
+    links: [
+      { label: "Twitter", href: "/" },
+      { label: "Linkedin", href: "https://www.linkedin.com/in/suleman-lohar-1129a9136/" },
+      { label: "Github", href: "https://github.com/legion40216" },
+    ]
+  },
+  {
+    title: "Contact",
+    info: "Feel free to reach out through any of the social links above!"
+  }
 ]
 
 export const baseRoutes = [];

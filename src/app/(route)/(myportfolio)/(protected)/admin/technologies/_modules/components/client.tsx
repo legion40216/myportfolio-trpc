@@ -1,7 +1,7 @@
 "use client"
 import React from 'react'
 
-import { DataTable } from '@/components/global-ui/data-table'
+import { DataTable } from '@/components/global-ui/shadcn_ui-custom/data-table'
 import { columns } from './client/columns'
 
 export type TecnologiesAdmin = {

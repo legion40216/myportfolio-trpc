@@ -3,10 +3,11 @@ import React from "react";
 
 import { Menu } from "lucide-react";
 
+import Link from "next/link";
 import { navLinks } from "@/data/links";
 import { usePathname } from "next/navigation";
+
 import NavLinks from "@/components/global-ui/nav-links";
-import Link from "next/link";
 
 import {
   DropdownMenu,
@@ -39,9 +40,15 @@ export default function NavGroup() {
             key={index}
             variant={"ghost"}
             asChild
-            className={route.active ? "!text-primary" : "!text-muted-foreground"}
+            className={`capitalize 
+              ${route.active ? "!text-primary" : "!text-muted-foreground"}
+              `}
           >
-            <Link href={route.href}>{route.label.charAt(0).toUpperCase() + route.label.slice(1)}</Link>
+            <Link 
+             href={route.href}
+            >
+            {route.label}
+            </Link>
           </Button>
           // <NavLinks
           //   key={index}
@@ -59,7 +66,7 @@ export default function NavGroup() {
       <div className="sm:hidden">
         <DropdownMenu>
           <DropdownMenuTrigger className="p-2 border rounded-md">
-            <Menu className="h-5 w-5" />
+            <Menu className="size-5" />
           </DropdownMenuTrigger>
           <DropdownMenuContent align="start" className="min-w-[150px]">
             {routes.map((route, index) => (
@@ -67,8 +74,8 @@ export default function NavGroup() {
                 <NavLinks
                   routeActive={route.active}
                   routeHref={route.href}
-                  routeLabel={route.label.charAt(0).toUpperCase() + route.label.slice(1)}
-                  className="w-full"
+                  routeLabel={route.label}
+                  className="w-full capitalize"
                   activeClassName="text-primary underline"
                   inactiveClassName="text-muted-foreground"
                 />

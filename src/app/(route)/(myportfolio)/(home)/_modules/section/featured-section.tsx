@@ -50,17 +50,17 @@ const FeaturedSectionContent = () => {
 
   return (
     <div className="space-y-2">
-        {formattedProjects.map((card) => (
-            <FeaturedCard
-            key={card.title}
-            imgSrc={card.imgSrc}
-            title={card.title}
-            description={card.description}
-            link={card.link}
-            github={card.github}
-            technologies={card.technologies}
-            />
-        ))}
+      {formattedProjects.map((card) => (
+        <FeaturedCard
+        key={card.title}
+        imgSrc={card.imgSrc}
+        title={card.title}
+        description={card.description}
+        link={card.link}
+        github={card.github}
+        technologies={card.technologies}
+        />
+      ))}
     </div>
   )
 }

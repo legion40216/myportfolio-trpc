@@ -20,7 +20,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { Button } from "@/components/ui/button";
-import ConfirmModal from "@/components/global-ui/confirm-modal";
+import ConfirmModal from "@/components/global-ui/shadcn_ui-custom/confirm-modal";
 
 type Props = {
   itemId: string;

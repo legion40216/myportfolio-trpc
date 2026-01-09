@@ -51,6 +51,7 @@ export default function HomeView() {
         <h2 className="text-2xl font-medium">Featured Projects</h2>
         <FeaturedSection />
       </div>
+
       <div>
         <Button asChild variant={"outline"} size={"lg"}>
           <Link href="/myprojects">
@@ -59,6 +60,7 @@ export default function HomeView() {
           </Link>
         </Button>
       </div>
+      
       <div className="space-y-4">
         <h2 className="text-2xl font-medium">Skills</h2>
         <TechnologiesSection />

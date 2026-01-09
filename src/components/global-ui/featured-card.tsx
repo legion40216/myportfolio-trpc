@@ -29,15 +29,17 @@ export default function FeaturedCard({
      text-portfolio-primary-foreground"
      >
       <div className="flex flex-col sm:flex-row gap-4 justify-between">
-        <div className="min-w-[220px] grow h-full">
-          <div className="relative aspect-video border rounded-md">
+        <div className="min-w-[220px]">
+          <div className="relative aspect-video border rounded-md 
+          overflow-hidden hover:scale-105 transition-transform duration-200"
+          >
             <Link href={link || "/"} target="_blank" rel="noreferrer">
-            <Image 
-              src={imgSrc} 
-              alt={title} 
-              fill 
-              className="object-contain" 
-            />
+              <Image 
+                src={imgSrc} 
+                alt={title} 
+                fill 
+                className="object-cover" 
+              />
             </Link>
           </div>
         </div>

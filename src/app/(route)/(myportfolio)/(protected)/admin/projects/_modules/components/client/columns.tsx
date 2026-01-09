@@ -5,7 +5,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { ProjectsAdmin } from "../client";
 
 import CellActions from "./columns/cell-actions";
-import CellLinks from "@/components/global-ui/cell-links";
+import CellLinks from "@/components/global-ui/shadcn_ui-custom/cell-links";
 import { Badge } from "@/components/ui/badge";
 
 export const columns: ColumnDef<ProjectsAdmin>[] = [

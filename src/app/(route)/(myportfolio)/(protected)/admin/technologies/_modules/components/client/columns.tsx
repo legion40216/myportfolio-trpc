@@ -3,7 +3,7 @@ import React from "react";
 import { ColumnDef } from "@tanstack/react-table";
 import { TecnologiesAdmin } from "../client";
 
-import CellLinks from "@/components/global-ui/cell-links";
+import CellLinks from "@/components/global-ui/shadcn_ui-custom/cell-links";
 import CellActions from "./columns/cell-actions";
 
 export const columns: ColumnDef<TecnologiesAdmin>[] = [
