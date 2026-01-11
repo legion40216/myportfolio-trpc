@@ -17,20 +17,22 @@ export default function LogoutGlobal() {
     await authClient.signOut();
     router.refresh();
   };
+  
   return (
     <>
       {isPending ? (
-        <span className={isPending ? "cursor-not-allowed" : ""}>
-          <span className="animate-pulse">Loading...</span>
-        </span>
+        <span className="animate-pulse">Loading...</span>
       ) : (
         <>
           {isLoggedIn ? (
-            <span onClick={handleLogout}>
-                Logout
-            </span>
+            <div 
+              onClick={handleLogout}
+              className="flex-1 cursor-pointer"
+            >
+              Logout
+            </div>
           ) : (
-            <Link href="/login">Login</Link>
+            <Link href="/login" className="flex-1">Login</Link>
           )}
         </>
       )}

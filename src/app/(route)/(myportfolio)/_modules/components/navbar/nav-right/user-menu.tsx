@@ -3,8 +3,9 @@ import React, { useEffect, useMemo, useState } from "react";
 
 import Link from "next/link";
 import { useCurrentUser } from "@/hooks/client-auth-utils";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { adminRoutes } from "@/data/links";
+import { authClient } from "@/lib/auth-client";
 
 import {
   DropdownMenu,
@@ -17,13 +18,13 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import LogoutGlobal from "@/components/global-ui/logout-global";
 
 export default function UserMenu() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const { user, isPending } = useCurrentUser();
   const isLoggedIn = !!user;
+  const router = useRouter();
 
   const [activeLink, setActiveLink] = useState<string | null>(null);
   const pathname = usePathname();
@@ -44,6 +45,12 @@ export default function UserMenu() {
     });
     setActiveLink(matchedRoute?.href || null);
   }, [pathname, allRoutes]);
+
+  const handleLogout = async () => {
+    await authClient.signOut();
+    router.refresh();
+    setIsOpen(false);
+  };
 
   return (
     <>
@@ -66,15 +73,13 @@ export default function UserMenu() {
 
           <DropdownMenuContent className="z-[9999]" align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem>
-              <div className="text-muted-foreground">
-                <LogoutGlobal />
-              </div>
+            <DropdownMenuItem onClick={handleLogout}>
+              Logout
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuLabel>Account</DropdownMenuLabel>
             {modifiedRoutes.map((route, index) => (
-              <DropdownMenuItem key={index}>
+              <DropdownMenuItem key={index} asChild>
                 <Link
                   href={route.href}
                   className={`
