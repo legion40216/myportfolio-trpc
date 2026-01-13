@@ -4,24 +4,13 @@ import React from 'react'
 import { DataTable } from '@/components/global-ui/shadcn_ui-custom/data-table'
 import { columns } from './client/columns'
 
-export type ProjectsAdmin = { 
-  id: string;
-  title: string;
-  description: string;
-  isFeatured: boolean;
-  isArchived: boolean;
-  technologies: {
-    id: string;
-    title: string;
-  }[];
-  createdAt: string;
+import { FormattedProjectForTable } from '@/types/types';
+
+type ClientProps = {
+  initialData: FormattedProjectForTable[];
 };
 
-type Props = {
-  initialData: ProjectsAdmin[];
-};
-
-export default function Client({ initialData } : Props) {
+export default function Client({ initialData } : ClientProps) {
   return (
     <div>
       <DataTable 

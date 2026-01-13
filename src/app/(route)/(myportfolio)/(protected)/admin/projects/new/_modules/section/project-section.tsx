@@ -7,6 +7,7 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 
 import EmptyState from "@/components/global-ui/empty-state";
 import Client from "../components/client";
+import { FormattedTechnologiesData } from "@/types/types";
 
 export const ProjectSection = () => {
   return (
@@ -30,7 +31,7 @@ const ProjectSectionContent = () => {
   const { data } = useSuspenseQuery(trpc.technologies.getAll.queryOptions());
   const technologies = data.technologies
 
-  const formattedData = {
+  const formattedData: FormattedTechnologiesData = {
     technologies: technologies.map(item => ({
       id: item.id,
       title: item.title

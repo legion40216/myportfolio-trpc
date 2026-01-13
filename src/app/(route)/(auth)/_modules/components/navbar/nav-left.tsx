@@ -16,6 +16,7 @@ export default function NavLeft() {
             Home
           </Link>
         </Button>
+        
         <Button
           variant="outline"
           size="sm"

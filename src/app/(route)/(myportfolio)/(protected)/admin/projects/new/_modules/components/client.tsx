@@ -2,15 +2,10 @@
 import React from "react";
 import ProjectForm from "./client/project-form";
 
-export type ProjectFormProps = {
-  technologies: {
-    id: string;
-    title: string;
-  }[];
-};
+import { FormattedTechnologiesData } from "@/types/types";
 
 type ClientProps = {
-  initialData: ProjectFormProps;
+  initialData: FormattedTechnologiesData;
 };
 
 export default function Client({ initialData }: ClientProps) {

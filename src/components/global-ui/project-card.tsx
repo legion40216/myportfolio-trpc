@@ -1,19 +1,11 @@
 import React from "react";
 import Link from "next/link";
 import { Github, LinkIcon, Star } from "lucide-react";
-import { Button } from "../ui/button";
 import { Badge } from "../ui/badge";
 import Image from "next/image";
+import { ProjectCardProps } from "@/types/types";
 
-export type ProjectCardProps = {
-  imgSrc: string;
-  title: string;
-  description: string;
-  isFeatured: boolean;
-  technologies: string[];
-  link: string;
-  github: string;
-};
+import { Button } from "../ui/button";
 
 export default function ProjectCard({
   imgSrc,
@@ -23,7 +15,7 @@ export default function ProjectCard({
   technologies,
   link,
   github,
-}: ProjectCardProps & {}) {
+}: ProjectCardProps) {
   return (
     <div className="group p-2 rounded-md bg-portfolio-primary 
     text-portfolio-primary-foreground 

@@ -6,15 +6,7 @@ import Image from "next/image"
 
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-
-type FeaturedCardProps = {
-  imgSrc: string
-  title: string
-  description: string
-  link: string
-  github: string
-  technologies: string[]
-}
+import { FeaturedCardProps } from "@/types/types"
 
 export default function FeaturedCard({
   imgSrc,
@@ -24,6 +16,7 @@ export default function FeaturedCard({
   github,
   technologies,
 }: FeaturedCardProps) {
+  
   return (
     <div className="group p-3 rounded-md bg-portfolio-primary
      text-portfolio-primary-foreground"

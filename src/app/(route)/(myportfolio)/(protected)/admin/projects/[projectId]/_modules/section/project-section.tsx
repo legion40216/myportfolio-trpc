@@ -6,8 +6,11 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { useTRPC } from "@/trpc/client";
 import { ProjectIdProps } from "../view/project-view";
 
+
 import EmptyState from "@/components/global-ui/empty-state";
 import Client from "../components/client";
+
+import { FormattedTechnologiesData, ProjectFormData } from "@/types/types";
 
 export const ProjectSection = ({ projectId }: ProjectIdProps) => {
   return (
@@ -48,14 +51,14 @@ const ProjectSectionContent = ({ projectId }: ProjectIdProps) => {
     );
   }
 
-  const formattedData = {
+  const formattedData: FormattedTechnologiesData = {
     technologies: technologies.map((item) => ({
       id: item.id,
       title: item.title,
     })),
   };
 
-  const formattedProject = {
+  const formattedProject: ProjectFormData = {
     id: project.id,
     title: project.title,
     description: project.description,

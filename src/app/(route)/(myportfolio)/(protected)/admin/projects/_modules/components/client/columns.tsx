@@ -1,14 +1,14 @@
 "use client";
-
 import React from "react";
+
 import { ColumnDef } from "@tanstack/react-table";
-import { ProjectsAdmin } from "../client";
+import { FormattedProjectForTable } from "@/types/types";
 
 import CellActions from "./columns/cell-actions";
 import CellLinks from "@/components/global-ui/shadcn_ui-custom/cell-links";
 import { Badge } from "@/components/ui/badge";
 
-export const columns: ColumnDef<ProjectsAdmin>[] = [
+export const columns: ColumnDef<FormattedProjectForTable>[] = [
   {
     accessorKey: "title",
     header: "Title",

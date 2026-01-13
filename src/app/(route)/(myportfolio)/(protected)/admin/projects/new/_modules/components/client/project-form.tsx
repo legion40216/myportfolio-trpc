@@ -1,17 +1,18 @@
 "use client";
 import React, { useEffect, useRef } from "react";
 
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
+import { Plus, Trash2 } from "lucide-react";
+
+import { FormattedTechnologiesData } from "@/types/types";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, useFieldArray } from "react-hook-form";
-import { toast } from "sonner";
-import { ProjectFormProps } from "../client";
 import { ProjectFormValues, projectSchema } from "@/schemas";
 
 import { useTRPC } from "@/trpc/client";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-
-import { useRouter } from "next/navigation";
-import { Plus, Trash2 } from "lucide-react";
 
 import {
   Form,
@@ -36,7 +37,7 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import ProjectImageUpload from "./project-form/project-image_upload";
 
-export default function ProjectForm({ technologies }: ProjectFormProps) {
+export default function ProjectForm({ technologies }: FormattedTechnologiesData) {
   const form = useForm<ProjectFormValues>({
     resolver: zodResolver(projectSchema),
     defaultValues: {

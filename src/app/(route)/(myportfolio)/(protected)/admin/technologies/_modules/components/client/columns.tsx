@@ -1,12 +1,13 @@
 "use client"
 import React from "react";
 import { ColumnDef } from "@tanstack/react-table";
-import { TecnologiesAdmin } from "../client";
+
+import { FormattedTechnologyForTable } from "@/types/types";
 
 import CellLinks from "@/components/global-ui/shadcn_ui-custom/cell-links";
 import CellActions from "./columns/cell-actions";
 
-export const columns: ColumnDef<TecnologiesAdmin>[] = [
+export const columns: ColumnDef<FormattedTechnologyForTable>[] = [
   {
     accessorKey: "title",
     header: "Title",

@@ -1,14 +1,10 @@
 "use client";
 import React from "react";
 import TechnologyForm from "./client/technology-form";
-
-export type TechnologyFormProps = {
-  id: string;
-  title: string;
-};
+import { TechnologyOption } from "@/types/types";
 
 type ClientProps = {
-  initialData: TechnologyFormProps;
+  initialData: TechnologyOption;
 };
 
 export default function Client({ initialData }: ClientProps) {

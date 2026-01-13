@@ -1,14 +1,17 @@
 "use client";
 import React, { useEffect, useRef } from "react";
+
+import { Plus, Trash2 } from "lucide-react";
+import { toast } from "sonner";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, useFieldArray } from "react-hook-form";
-import { toast } from "sonner";
-import { formattedDataProps, ProjectFormProps } from "../client";
+import { ProjectFormValues, projectSchema } from "@/schemas";
+
+import { FormattedTechnologiesData, ProjectFormData } from "@/types/types";
 
 import { useTRPC } from "@/trpc/client";
 import { useRouter } from "next/navigation";
-
-import { Plus, Trash2 } from "lucide-react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import {
@@ -32,12 +35,11 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { ProjectFormValues, projectSchema } from "@/schemas";
 import ProjectImageUpload from "./project-form/project-image_upload";
 
 type ProjectFormPropsMain = {
-  technologiesOptions: formattedDataProps["technologies"];
-} & ProjectFormProps;
+  technologiesOptions: FormattedTechnologiesData["technologies"];
+} & ProjectFormData;
 
 export default function ProjectForm({
   technologiesOptions,
@@ -51,6 +53,7 @@ export default function ProjectForm({
   isArchived,
   technologies: projectTechnologies = [{ technologyId: "" }],
 }: ProjectFormPropsMain) {
+  
   const form = useForm<ProjectFormValues>({
     resolver: zodResolver(projectSchema),
     defaultValues: {

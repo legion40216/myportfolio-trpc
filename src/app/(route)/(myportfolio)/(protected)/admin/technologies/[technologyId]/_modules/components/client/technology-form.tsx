@@ -1,7 +1,8 @@
 "use client";
 import React, { useEffect } from "react";
 import { toast } from "sonner";
-import { TechnologyFormProps } from "../client";
+
+import { TechnologyOption } from "@/types/types";
 
 import { useRouter } from "next/navigation";
 import { useTRPC } from "@/trpc/client";
@@ -23,7 +24,7 @@ import { TechnologiesFormValues, technologiesSchema } from "@/schemas";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
-export default function TechnologyForm({ id, title }: TechnologyFormProps) {
+export default function TechnologyForm({ id, title }: TechnologyOption) {
   const router = useRouter();
 
   const form = useForm<TechnologiesFormValues>({
